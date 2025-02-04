@@ -19,5 +19,6 @@ make
 # Run
 
 ```
-python perplexity.py
+python perplexity.py examples/wikipedia.txt
+python perplexity.py examples/markov.txt
 ```
