@@ -27,8 +27,6 @@ def perplexity(content):
     doc_log_score, doc_length = 0, 0
     sentences = []
     for line in lines:       
-        #n = text_normalizer.normalize(line)
-        #clean_content = sp.encode_as_pieces(n)
         log_score = model.score(line)
         length = len(line.split()) + 1
         doc_log_score += log_score
