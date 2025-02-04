@@ -1,4 +1,7 @@
-Very simple demo of Perplexity calculation based on: https://github.com/facebookresearch/cc_net.
+Very simple example of a Perplexity calculation based on wikipedia trained model.
+Based on filtering the common crawl from: https://github.com/facebookresearch/cc_net & accompanying paper: https://arxiv.org/pdf/1911.00359
+
+
 
 # Install
 
