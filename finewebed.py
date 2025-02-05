@@ -11,6 +11,13 @@ def finewebed(text):
     score = logits.item()
     return score
 
+def category(score):
+    #int_score >= 3 as a threshold for data curation
+    if score >= 3:
+        return "Accept"
+    else:
+        return "Reject"
+
 if __name__ == "__main__":
     if(len(sys.argv) < 2):
         print("Usage: python perplexity FILENAME")

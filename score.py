@@ -15,6 +15,6 @@ with open(target) as f:
     f = finewebed.finewebed(text)
 
     print(f"{target}: Perplexity: {p} | Quality: {perplexity.category(p)}")
-    print(f"{target}: FineWebEd:  {f} ")
+    print(f"{target}: FineWebEd:  {f} | {finewebed.category(f)}")
 
 
