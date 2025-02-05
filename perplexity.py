@@ -1,16 +1,13 @@
 import sys
+
 import kenlm
 import pandas as pd
 import sentencepiece
 
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
 from sentence_splitter import SentenceSplitter
 from cc_net import text_normalizer
-
-if(len(sys.argv) < 2):
-    print("Usage: python perplexity FILENAME")
-    exit(1)
-    
-target = sys.argv[1]
 
 sp = sentencepiece.SentencePieceProcessor()
 sp.load(str("lm/en.sp.model"))    
@@ -44,25 +41,28 @@ def perplexity(content):
     doc_score = round(pp(doc_log_score, doc_length), 1)
     return doc_score
 
-def cutoff_bucket(cutoffs, perplexity):
+def category(perplexity):
     lang = "en"
     if perplexity < 0:
         return "all"
     pp_head, pp_tail = cutoffs[lang]
     if perplexity < pp_head:
-        return "good"
+        return "high"
     if perplexity < pp_tail:
         return "middle"
-    return "bad"
+    return "low"
 
+if __name__ == "__main__":
+    if(len(sys.argv) < 2):
+        print("Usage: python perplexity FILENAME")
+        exit(1)
+    
+    target = sys.argv[1]
 
-random_content = ''' '''
+    with open(target) as f:
+        text = f.read()
+        p = perplexity(text)
+        print(p)
+    
 
-wiki_content = '''
-'''
-
-with open(target) as f:
-    p = perplexity(f.read())
-    print(f"{target}: {p} perplexity")
-    print(f"bucketed: {cutoff_bucket(cutoffs, p)}")
 
