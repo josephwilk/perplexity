@@ -4,3 +4,6 @@ pandas
 sentence_splitter
 sentencepiece
 
+torch
+transformers
+
