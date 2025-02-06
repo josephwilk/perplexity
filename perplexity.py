@@ -37,7 +37,7 @@ def perplexity(content):
         doc_length += length
         sentences.append(f"{pp(log_score, length)}\t{line}")
 
-    print("\n".join(sentences)+"\n")
+    #print("\n".join(sentences)+"\n")
     doc_score = round(pp(doc_log_score, doc_length), 1)
     return doc_score
 
