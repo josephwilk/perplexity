@@ -1,25 +1,28 @@
 import sys
-import glob, re
+import glob
+from concurrent.futures import ThreadPoolExecutor
 
 import finewebed
 import perplexity
-
-from concurrent.futures import ThreadPoolExecutor
 
 if(len(sys.argv) < 2):
     print("Usage: python score.py DIRNAME")
     exit(1)
     
-target = sys.argv[1]
-DATA_FILES = glob.glob(target+'**/*.txt', recursive=True)
+target_dir = sys.argv[1]
+DATA_FILES = glob.glob(target_dir+'**/*.txt', recursive=True)
 
 def print_score(filename):
-    with open(filename) as f:
-        text = f.read()
-        p = perplexity.perplexity(text)
-        f = finewebed.finewebed(text)
-        print(f"{filename}: Perplexity: {p} | Quality: {perplexity.category(p)}")
-        print(f"{filename}: FineWebEd:  {f} | {finewebed.category(f)}")
-        print("")
+    try:
+        with open(filename, 'r') as f:
+            text = f.read()
+            p = perplexity.perplexity(text)
+            f = finewebed.finewebed(text)
+            print(f"{filename}: Perplexity: {p} | Quality: {perplexity.category(p)}")
+            print(f"{filename}: FineWebEd:  {f} | {finewebed.category(f)}")
+            print("")
+    except Exception as e:
+        print(f"Error processing {filename}: {e}")
 
-executor = ThreadPoolExecutor(20).map(print_score, DATA_FILES)
+with ThreadPoolExecutor(max_workers=20) as executor:
+    executor.map(print_score, DATA_FILES)
